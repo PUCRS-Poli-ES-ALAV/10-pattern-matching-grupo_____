@@ -94,6 +94,28 @@ public class PatternMatching {
         s1 = "ADF";
         s2 = "BBBBBBBBBBBBBBBB";
         resultado(4, s1, s2, patternMatch(s1, s2));
+        
+        char ABC[] = {'A', 'B', 'C'};
+        StringBuilder bs3 = new StringBuilder();
+        StringBuilder bs4 = new StringBuilder();
+
+        for (int i = 0; i < 5000; i++){
+            if (i < 5000){
+                int pos = (int) (Math.random() * 3);
+                bs3.append(ABC[pos]);
+            }
+            if (i < 100){
+                int pos = (int) (Math.random() * 3);
+                bs4.append(ABC[pos]);
+            }
+
+        }
+        String s3 = bs3.toString();
+        String s4 = bs4.toString();
+
+        resultado(5, s3, s4, patternMatch(s3, s4));
+
+        
 
     }
 }
