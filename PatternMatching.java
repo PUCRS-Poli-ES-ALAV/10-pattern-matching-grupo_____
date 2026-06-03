@@ -22,33 +22,40 @@ Assim, se s1 = "ABCDCBDCBDACBDABDCBADF" e s1 = "ADF" o retorno seria 19.
 public class PatternMatching {
 
     static long iteracoes = 0;
+    static long instrucoes = 0;
     static long tempo = 0;
 
     public static int patternMatch(String s1, String s2) {
 
         iteracoes = 0;
+        instrucoes = 0;
         tempo = 0;
 
         long inicio = System.nanoTime();
         int tamanhoS1 = s1.length();
         int tamanhoS2 = s2.length();
+        instrucoes += 2;
 
         if (tamanhoS2 == 0) {
             tempo = System.nanoTime() - inicio;
+            instrucoes++;
             return 0;
         }
 
         if (tamanhoS2 > tamanhoS1) {
             tempo = System.nanoTime() - inicio;
+            instrucoes++;
             return -1;
         }
 
         for (int i = 0; i <= tamanhoS1 - tamanhoS2; i++) {
 
             int j = 0;
+            instrucoes++;
 
             while (j < tamanhoS2) {
                 iteracoes++;
+                instrucoes++;
                 if (s1.charAt(i + j) != s2.charAt(j))
                     break;
                 j++;
@@ -56,11 +63,13 @@ public class PatternMatching {
 
             if (j == tamanhoS2) {
                 tempo = System.nanoTime() - inicio;
+                instrucoes++;
                 return i;
             }
         }
 
         tempo = System.nanoTime() - inicio;
+        instrucoes++;
         return -1;
     }
 
@@ -74,6 +83,7 @@ public class PatternMatching {
         else
             System.out.println("Posição: " + posicao);
         System.out.println("Iterações: " + iteracoes);
+        System.out.println("Instruções: " + instrucoes);
         System.out.println("Tempo: " + tempo + "ns\n");
     }
 
@@ -94,28 +104,29 @@ public class PatternMatching {
         s1 = "ADF";
         s2 = "BBBBBBBBBBBBBBBB";
         resultado(4, s1, s2, patternMatch(s1, s2));
-        
+
         char ABC[] = {'A', 'B', 'C'};
         StringBuilder bs3 = new StringBuilder();
         StringBuilder bs4 = new StringBuilder();
 
-        for (int i = 0; i < 5000; i++){
-            if (i < 5000){
+        for (int i = 0; i < 50000; i++) {
+            if (i < 50000) {
                 int pos = (int) (Math.random() * 3);
                 bs3.append(ABC[pos]);
-            }
-            if (i < 100){
-                int pos = (int) (Math.random() * 3);
-                bs4.append(ABC[pos]);
+                instrucoes += 2;
             }
 
+            if (i < 10) {
+                int pos = (int) (Math.random() * 3);
+                bs4.append(ABC[pos]);
+                instrucoes += 2;
+            }
         }
         String s3 = bs3.toString();
         String s4 = bs4.toString();
 
         resultado(5, s3, s4, patternMatch(s3, s4));
-
-        
-
+        // System.out.println(s3);
+        // System.out.println(s4);
     }
 }
